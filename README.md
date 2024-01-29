@@ -4,7 +4,7 @@
 
 ### CUDA accelerated single cell phylogenetics using BEAST2 with the Phylonco package
 
-This repo contains the Dockerfiles for the CUDA accelerated BEAST2 image with the Phylonco package. The images are available on [Docker hub](https://hub.docker.com/r/zinno/beast2-phylonco-cuda/tags).
+This repo contains the Dockerfiles for CUDA accelerated [BEAST2](https://www.beast2.org/) images with the [Phylonco](https://github.com/bioDS/beast-phylonco) package. The images are available on [Docker hub](https://hub.docker.com/r/zinno/beast2-phylonco-cuda/tags).
 
 ### Generic Compute 70(+) image
 
