@@ -22,7 +22,7 @@ ENV PATH $JAVA_HOME/bin:$PATH
 # Install BEAGLE
 RUN git clone --depth=1 --branch="v3.1.2" https://github.com/beagle-dev/beagle-lib.git \
     && cd beagle-lib \
-    && sed -i 's/compute_30/compute_70/' configure.ac \
+    && sed -i 's/compute_30/compute_86/' configure.ac \
     && ./autogen.sh \
     && ./configure --prefix=/usr/local \
     && make install \
@@ -36,7 +36,8 @@ RUN wget https://github.com/CompEvol/beast2/releases/download/v2.7.6/BEAST.v2.7.
     && mv beast /usr/local/ \
     && ln -s /usr/local/beast/bin/beast /usr/local/bin/beast \
     && ln -s /usr/local/beast/bin/packagemanager /usr/local/bin/packagemanager \
-    && packagemanager -add phylonco
+    && mkdir -p /usr/local/beast/packages \
+    && packagemanager -dir /usr/local/beast/packages -add phylonco
 
 ENV CLASSPATH /usr/local/beast/lib/*
 
