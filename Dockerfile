@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libtool \
     pkg-config \
     openjdk-17-jdk \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Set Java environment variables
@@ -22,7 +23,7 @@ ENV PATH $JAVA_HOME/bin:$PATH
 # Install BEAGLE
 RUN git clone --depth=1 --branch="v3.1.2" https://github.com/beagle-dev/beagle-lib.git \
     && cd beagle-lib \
-    && sed -i 's/compute_30/compute_86/' configure.ac \
+    && sed -i 's/compute_30/compute_70/' configure.ac \
     && ./autogen.sh \
     && ./configure --prefix=/usr/local \
     && make install \
@@ -37,9 +38,15 @@ RUN wget https://github.com/CompEvol/beast2/releases/download/v2.7.6/BEAST.v2.7.
     && ln -s /usr/local/beast/bin/beast /usr/local/bin/beast \
     && ln -s /usr/local/beast/bin/packagemanager /usr/local/bin/packagemanager \
     && mkdir -p /usr/local/beast/packages \
-    && packagemanager -dir /usr/local/beast/packages -add phylonco
+    && packagemanager -dir /usr/local/beast/packages -add phylonco \
+    && mkdir -p /usr/local/beast/packages/rootfreqs
 
-ENV CLASSPATH /usr/local/beast/lib/*
+COPY addons/rootfreqs.addon.v0.0.2.zip /usr/local/beast/packages/rootfreqs
+
+RUN unzip /usr/local/beast/packages/rootfreqs/rootfreqs.addon.v0.0.2.zip -d /usr/local/beast/packages/rootfreqs 
+
+
+ENV CLASSPATH /usr/local/beast/lib/*:
 
 # Set up entrypoint
 CMD ["/bin/bash"]
